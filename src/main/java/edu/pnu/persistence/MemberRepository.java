@@ -8,7 +8,8 @@ import edu.pnu.domain.Member;
 
 public interface MemberRepository extends JpaRepository<Member, String>{
 
-	Optional<Member> findByUsername(String username);	
+	Optional<Member> findByUsername(String username);
+	
 	
 	boolean existsByUsername(String username);
 

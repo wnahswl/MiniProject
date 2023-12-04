@@ -1,13 +1,19 @@
 package edu.pnu.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,10 +52,11 @@ public class Member {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
-//	@OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
-//	@JsonIgnore
-//	private List<QuestionBoard> questions;
+//양방향 매핑
+	//EAGER로 설정해서 회원정보를 가져올 때 등록한 게시물도 같이 조회
+	@OneToMany(mappedBy = "member",fetch = FetchType.EAGER)
+	private List<QuestionBoard> boardList = new ArrayList<QuestionBoard>();
 	
-	
+
 
 }

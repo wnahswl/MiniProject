@@ -49,7 +49,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		Authentication authToken = new UsernamePasswordAuthenticationToken(member.getUsername(), member.getPassword());
 
 		Authentication auth = authenticationManager.authenticate(authToken);
-		System.out.println("auth:" + auth);
+		System.out.println("auth11:" + auth);
 		return auth;
 	}
 

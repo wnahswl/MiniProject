@@ -24,7 +24,6 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Table(name = "comment")
 public class AnswerBoard {
 	@Id
@@ -36,16 +35,14 @@ public class AnswerBoard {
 	
 	private Date createDate;
 	
-	//댓글과 게시글 N:1 
+//	//댓글과 게시글 N:1 
 	@ManyToOne
 	@JoinColumn(name = "question_id")
 	@JsonIgnore
 	private QuestionBoard question;
-	
-	//댓글 유저 N:1
-//	@ManyToOne
-//    @JoinColumn(name = "author_username")
-//    @JsonIgnore
-//    private Member author;
 
+	@ManyToOne
+    @JoinColumn(name = "username")
+    @JsonIgnore
+    private Member member;
 }

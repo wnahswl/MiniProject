@@ -3,6 +3,8 @@ package edu.pnu.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import edu.pnu.domain.ParkingCode;
@@ -41,6 +43,11 @@ public class ParkingService {
 		}else {
 			throw new DataNotfoundException("없는 주차장 정보입니다.");
 		}
+	}
+	
+	//페이징
+	public Page<ParkingRefer> getParkInfoPaging(Pageable pageable){
+		return parkingReferRepository.findAll(pageable);
 	}
 	
 	

@@ -1,6 +1,5 @@
 package edu.pnu.controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -18,12 +17,12 @@ import edu.pnu.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 
 //url question 생략
-@RequestMapping("/question")
+@RequestMapping("/board")
 @RequiredArgsConstructor
 @RestController
 public class QuestionController {
 	
-	private  final QuestionService questionService;
+	private final QuestionService questionService;
 	
 	@GetMapping("/list")
 	public List<QuestionBoard> list() {
@@ -35,17 +34,15 @@ public class QuestionController {
 		return questionService.getQuestion(id);
 	}
 	
+	
 	@PostMapping("/create")
-	public Integer createBoard(@RequestBody  QuestionBoardDto questionBoardDto) {
-		return questionService.createQBoard(questionBoardDto);
+	public void create(@RequestBody QuestionBoardDto board) {
+		 questionService.writePost(board);
 	}
+	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteQuestionBoard(@PathVariable Integer id,Principal principal){
-		
-		//현재 로그인한 사용자 정보를 가져오기
-		String username= principal.getName();
-		
-		questionService.deleteQuestionBoard(id, username);
+	public ResponseEntity<String> deleteQuestionBoard(@PathVariable Integer id){
+		questionService.deleteQuestionBoard(id);
 		return ResponseEntity.ok("deleted successfully");
 	}
 	

@@ -2,6 +2,8 @@ package edu.pnu.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,9 +40,14 @@ public class ParkingController {
 		return parkingService.getRefer();
 	}
 	
-	@GetMapping("/info/{prkPlaceName}")
+	@GetMapping("/detail/{prkPlaceName}")
 	public ParkingInfo detail(@PathVariable("prkPlaceName")String prkPlaceName) {
 		return parkingService.getParkingInfo(prkPlaceName);
+	}
+	
+	@GetMapping("/paging")
+	public Page<ParkingRefer> getInfoPaging(Pageable pageable){
+		return parkingService.getParkInfoPaging(pageable);
 	}
 	
 

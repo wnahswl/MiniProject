@@ -2,7 +2,6 @@ package edu.pnu;
 
 import java.util.Date;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,14 +21,16 @@ class SubProjectApplicationTests {
 	@Autowired
 	MemberRepository mRepo;
 	
+	
+	
 	@Autowired
 	PasswordEncoder encoder;
 
 //	@Test
 	void testBoard() {
 		QuestionBoard q1 = new QuestionBoard();
-		q1.setQTitle("Q 제목");
-		q1.setQcontent("Q 내용");
+		q1.setTitle("Q 제목");
+		q1.setContent("Q 내용");
 		q1.setCreateDate(new Date());
 		bRepo.save(q1);	
 	}
@@ -58,7 +59,7 @@ class SubProjectApplicationTests {
 				.build());
 	}
 
-	@Test
+//	@Test
 	void testMembers()
 	{
 		for(int i=1;i<=50;i++) {
@@ -72,4 +73,16 @@ class SubProjectApplicationTests {
 				.build());
 		}
 	}
+//		@Test
+		void testBoard1()
+		{
+			for(int i=1;i<=10;i++) {
+				bRepo.save(QuestionBoard.builder()
+						.title("Test"+i)
+						.content("Test"+i)
+						.createDate(new Date())
+						.build());
+			}
+		}
+	
 }

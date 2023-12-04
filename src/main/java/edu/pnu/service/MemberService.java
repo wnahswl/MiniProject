@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import edu.pnu.domain.Member;
@@ -18,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberService {
 	private final MemberRepository memRepo;
 	
-	
+	  
 
 	// 모든 회원 목록 출력
 	public List<Member> getMember() {
