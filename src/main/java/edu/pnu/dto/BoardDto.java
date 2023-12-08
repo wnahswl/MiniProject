@@ -20,12 +20,4 @@ public class BoardDto {
 	private Date createDate;
 	private String username;
 	private Integer view;
-   public BoardDto(Integer id, String title, String content, String username,Integer view) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.username = username;
-        this.view = view;
-    }
-
 }

@@ -54,14 +54,9 @@ public class MemberService {
 		//null이 아닐시
 		if (optionalMember.isPresent()) {
 			Member existingMember = optionalMember.get();
-			
+			//아이디 변경은 불가능 이름과 비밀번호만 변경가능
 			existingMember.setNickname(updateMember.getNickname());
-		
-			
-			//아이디 변경은 불가능
-			existingMember.setNickname(updateMember.getNickname());
-			
-
+			existingMember.setPassword(updateMember.getPassword());
 			return memRepo.save(existingMember);
 			//null일 경우
 		} else {
@@ -74,7 +69,6 @@ public class MemberService {
 		 Optional<Member> optionalMember= memRepo.findByUsername(username);
 		 //null이 아니면
 		 if(optionalMember.isPresent()) {
-			 
 			 //삭제한 멤버가 뭔지 알려줄 객체 생성
 			 Member existingMember = optionalMember.get();
 			 memRepo.delete(existingMember);

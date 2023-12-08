@@ -47,23 +47,14 @@ public class CommentController {
 		answerService.addComment(id, dto);
 	}
 	
-	
-	// controller에서 void로 반환하면 프론트에 가는게 없음
-	// dto 는 어디서 받아오는가?
-//	@PostMapping("/create/{id}")
-//	public ResponseEntity<?> createAnswer(@PathVariable Integer id, @RequestBody String text){
-//		Comment comment = answerService.addComment(id, text);
-//		return ResponseEntity.ok(comment);
-//	}
-	
 	//id 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteAnswerBoard(@PathVariable Integer id){
 		answerService.deleteComment(id);
 		return ResponseEntity.ok("delete successfully");
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<String> UpdateAnswerBoard(@PathVariable Integer id,@RequestBody CommentDto dto){
 		answerService.updateComment(id,dto);
 		return ResponseEntity.ok("update successfully");

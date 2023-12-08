@@ -7,7 +7,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,11 +30,6 @@ public class BoardController {
 	
 	private final BoardService questionService;
 	
-//	@GetMapping("/list")
-//	public List<QuestionBoard> list() {
-//		return questionService.getList();
-//	}
-	
 	@GetMapping("/list")
 	public List<BoardDto> list(){
 		return questionService.getList();
@@ -57,7 +51,7 @@ public class BoardController {
 	public void update(@PathVariable("id") Integer id,@RequestBody BoardDto board) {
 		questionService.update(board, id);
 	}
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteQuestionBoard(@PathVariable Integer id){
 		questionService.deleteQuestionBoard(id);
 		return ResponseEntity.ok("deleted successfully");
@@ -72,13 +66,5 @@ public class BoardController {
 		Page<Board> boardList = questionService.pagingBoard(pageable);
 		return ResponseEntity.ok(boardList);
 	}
-	
-	@GetMapping("/user")
-	public Object getUser() {
-		return questionService.GetRole();
-	}
-	
-	
-	
 
 }

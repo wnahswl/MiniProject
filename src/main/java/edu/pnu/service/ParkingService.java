@@ -38,7 +38,6 @@ public class ParkingService {
 	}
 
 	public List<ParkingRefer> getRefer() {
-
 		return parkingReferRepository.findAll();
 	}
 
