@@ -1,4 +1,4 @@
-package edu.pnu.service;
+package edu.pnu.exception;
 
 public class MemberNotFoundException extends RuntimeException{
  public MemberNotFoundException(String message) {

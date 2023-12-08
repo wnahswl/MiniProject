@@ -4,10 +4,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.expression.AccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import edu.pnu.domain.Member;
 import edu.pnu.domain.Role;
+import edu.pnu.dto.MemberDto;
+import edu.pnu.exception.MemberNotFoundException;
 import edu.pnu.persistence.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class MemberService {
 	private final MemberRepository memRepo;
-	
+	private final PasswordEncoder encoder;
 	  
 
 	// 모든 회원 목록 출력
@@ -24,9 +28,22 @@ public class MemberService {
 	}
 
 	// 회원가입
-	public Member join(Member member) {
-		member.setRole(Role.ROLE_USER);
-		member.setRegiDate(new Date());
+	public Member join(MemberDto memberDto) throws AccessException {
+		Member member = new Member();
+		Optional<Member>optMember = memRepo.findByUsername(memberDto.getUsername());
+		if(optMember.isEmpty()) {
+			if(memberDto.getPassword().equals(memberDto.getCheckPassword())) {
+				member.setUsername(memberDto.getUsername());
+				member.setPassword(encoder.encode(memberDto.getPassword()));
+				member.setNickname(memberDto.getNickname());
+				member.setRole(Role.ROLE_USER);
+				member.setRegiDate(new Date());
+			}else {
+				throw new AccessException("패스워드가 일치하지 않습니다");
+			}
+		}else {
+			throw new AccessException("존재하는 회원입니다.");
+		}
 		return memRepo.save(member);
 	}
 	
@@ -39,11 +56,10 @@ public class MemberService {
 			Member existingMember = optionalMember.get();
 			
 			existingMember.setNickname(updateMember.getNickname());
-//			existingMember.setEmail(updateMember.getEmail());
-//			existingMember.setPhoneNum(updateMember.getPhoneNum());
+		
 			
 			//아이디 변경은 불가능
-//			existingMember.setNickname(updateMember.getNickname());
+			existingMember.setNickname(updateMember.getNickname());
 			
 
 			return memRepo.save(existingMember);

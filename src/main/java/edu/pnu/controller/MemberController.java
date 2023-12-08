@@ -2,6 +2,7 @@ package edu.pnu.controller;
 
 import java.util.List;
 
+import org.springframework.expression.AccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.pnu.domain.Member;
-import edu.pnu.service.MemberNotFoundException;
+import edu.pnu.dto.MemberDto;
+import edu.pnu.exception.MemberNotFoundException;
 import edu.pnu.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
@@ -31,11 +33,10 @@ public class MemberController {
 		return memberService.getMember();
 	}
 	
-	
 	//회원가입
 	@PostMapping("/user/join")
-	public ResponseEntity<?> join(@RequestBody Member member) {
-		memberService.join(member);
+	public ResponseEntity<?> join(@RequestBody MemberDto memberDto) throws AccessException {
+		memberService.join(memberDto);
 		return ResponseEntity.ok().build();
 	}
 	

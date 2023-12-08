@@ -30,12 +30,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
 		
-		//아래 코드가 없어서 Access가 안됐음
-		response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-		//Header에 토큰값 추가
-		response.addHeader("Access-Control-Expose-Headers", "Authorization");
-		
-		//request에서 json타입의 username/password를 읽어서 Member 객체 생성
 		ObjectMapper mapper = new ObjectMapper();
 		Member member = null;
 		try {
@@ -59,7 +53,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			Authentication authResult) throws IOException, ServletException {
 
 		User user = (User) authResult.getPrincipal();
-		String token = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 10))
+		String token = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 360))
 				.withClaim("username", user.getUsername()).sign(Algorithm.HMAC256("edu.pnu.jwt"));
 		
 		//클라이언트에게 토큰전송

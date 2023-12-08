@@ -7,16 +7,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import edu.pnu.domain.Member;
-import edu.pnu.domain.QuestionBoard;
+import edu.pnu.domain.Board;
 import edu.pnu.domain.Role;
 import edu.pnu.persistence.MemberRepository;
-import edu.pnu.persistence.QuestionBoardRepository;
+import edu.pnu.persistence.BoardRepository;
 
 @SpringBootTest
 class SubProjectApplicationTests {
 	
 	@Autowired
-	QuestionBoardRepository bRepo;
+	BoardRepository bRepo;
 	
 	@Autowired
 	MemberRepository mRepo;
@@ -28,7 +28,7 @@ class SubProjectApplicationTests {
 
 //	@Test
 	void testBoard() {
-		QuestionBoard q1 = new QuestionBoard();
+		Board q1 = new Board();
 		q1.setTitle("Q 제목");
 		q1.setContent("Q 내용");
 		q1.setCreateDate(new Date());
@@ -41,8 +41,6 @@ class SubProjectApplicationTests {
 				.password(encoder.encode("abcd"))
 				.nickname("admin")
 				.regiDate(new Date())
-				.phoneNum("01011112222")
-				.email("abcd@gmail.com")
 				.role(Role.ROLE_ADMIN)
 				.build());
 	}
@@ -53,8 +51,6 @@ class SubProjectApplicationTests {
 				.password(encoder.encode("test"))
 				.nickname("test")
 				.regiDate(new Date())
-				.phoneNum("010")
-				.email("abcd@gmail.com")
 				.role(Role.ROLE_USER)
 				.build());
 	}
@@ -68,7 +64,6 @@ class SubProjectApplicationTests {
 				.password(encoder.encode("test" +i))
 				.nickname("test"+i)
 				.regiDate(new Date())
-				.email("abcd"+i+"@gmail.com")
 				.role(Role.ROLE_USER)
 				.build());
 		}
@@ -77,7 +72,7 @@ class SubProjectApplicationTests {
 		void testBoard1()
 		{
 			for(int i=1;i<=10;i++) {
-				bRepo.save(QuestionBoard.builder()
+				bRepo.save(Board.builder()
 						.title("Test"+i)
 						.content("Test"+i)
 						.createDate(new Date())

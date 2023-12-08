@@ -8,8 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +31,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Table(name = "Board")
-public class QuestionBoard {
+public class Board {
 	//기본키로 지정하고 1씩 자동증가
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,16 +47,18 @@ public class QuestionBoard {
 	//실제 컬럼명은 create_Date로 변경됨
 	private Date createDate;
 	
-	
+	//조회수
+	@Column(columnDefinition = "integer default 0")
+	private Integer view;
 	
 		//게시글과 댓글은 1:N 관계
 	//질문을 삭제하면 답변도 함께 삭제하기 위해 cascadeType.REMOVE 사용
-	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
 	@JsonIgnore
-	private List<AnswerBoard> answerList;
+	private List<Comment> answerList;
 	
 //	//게시글과 유저는 N:1
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "username")
     @JsonIgnore
     private Member member;

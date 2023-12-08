@@ -25,7 +25,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "comment")
-public class AnswerBoard {
+public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Id;
@@ -38,8 +38,7 @@ public class AnswerBoard {
 //	//댓글과 게시글 N:1 
 	@ManyToOne
 	@JoinColumn(name = "question_id")
-	@JsonIgnore
-	private QuestionBoard question;
+	private Board question;
 
 	@ManyToOne
     @JoinColumn(name = "username")
