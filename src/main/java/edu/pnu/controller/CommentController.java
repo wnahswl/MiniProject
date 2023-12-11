@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.pnu.domain.Comment;
 import edu.pnu.dto.CommentDto;
 import edu.pnu.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +24,9 @@ public class CommentController {
 	
 	private final CommentService answerService;
 	
-	@GetMapping("/list1")
-	public List<Comment> list(){
-		return answerService.getList();
-	}
-	
 	@GetMapping("/list")
 	public List<CommentDto> list1(){
-		return answerService.getList1();
+		return answerService.getList();
 	}
 	
 	//id는 게시글 번호
@@ -43,8 +37,9 @@ public class CommentController {
 	
 	//id는 게시글 번호
 	@PostMapping("/create/{id}")
-	public void createAnswer(@PathVariable Integer id, @RequestBody CommentDto dto) {
+	public ResponseEntity<String> createAnswer(@PathVariable Integer id, @RequestBody CommentDto dto) {
 		answerService.addComment(id, dto);
+		return ResponseEntity.ok("create successfully");
 	}
 	
 	//id 

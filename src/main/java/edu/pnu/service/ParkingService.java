@@ -7,11 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import edu.pnu.domain.ParkingCode;
 import edu.pnu.domain.ParkingInfo;
 import edu.pnu.domain.ParkingRefer;
 import edu.pnu.exception.DataNotfoundException;
-import edu.pnu.persistence.ParkingCodeRepository;
 import edu.pnu.persistence.ParkingInfoRepository;
 import edu.pnu.persistence.ParkingReferRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class ParkingService {
 	private final ParkingInfoRepository parkingInfoRepository;
-	private final ParkingCodeRepository parkingCodeRepository;
 	private final ParkingReferRepository parkingReferRepository;
 
 	public Page<ParkingRefer> getWithPaging(Pageable pageable) {
@@ -30,11 +27,6 @@ public class ParkingService {
 	// 모든 주차장 정보 출력
 	public List<ParkingInfo> getInfo() {
 		return parkingInfoRepository.findAll();
-	}
-
-	// 코드 출력
-	public List<ParkingCode> getGuDong() {
-		return parkingCodeRepository.findAll();
 	}
 
 	public List<ParkingRefer> getRefer() {
@@ -62,8 +54,7 @@ public class ParkingService {
 				&& !dong.isEmpty()) {
 			return parkingReferRepository.findByGuAndDong(gu, dong, pageable);
 			// 구만 있을 경우
-		} else if (prkPlaceNm == null
-				|| prkPlaceNm.isEmpty() && (dong == null || dong.isEmpty()) && gu != null && !gu.isEmpty()) {
+		} else if ((prkPlaceNm == null|| prkPlaceNm.isEmpty()) && ((dong == null || dong.isEmpty())) && (gu != null && !gu.isEmpty())) {
 			return parkingReferRepository.findByGu(gu, pageable);
 		}
 		// 주차장 명과 구만 있을 경우

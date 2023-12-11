@@ -63,12 +63,7 @@ public class CommentService {
 		return null;
 	}
 
-	// 모든 답변 댓글 출력
-	public List<Comment> getList() {
-		return answerRepository.findAll();
-	}
-
-	public List<CommentDto> getList1() {
+	public List<CommentDto> getList() {
 		List<Comment> answerBoards = answerRepository.findAll();
 		// dto List 생성
 		List<CommentDto> answerBoardDtos = new ArrayList<>();
@@ -92,8 +87,8 @@ public class CommentService {
 
 			for (Comment comment : commentList) {
 				CommentDto commentDto = new CommentDto();
+				commentDto.setId(comment.getId());
 				commentDto.setContent(comment.getContent());
-				;
 				commentDto.setUsername(comment.getMember().getUsername());
 				commentDto.setCreateDate(comment.getCreateDate());
 				commentListDto.add(commentDto);
@@ -111,6 +106,7 @@ public class CommentService {
 			return ResponseEntity.status(401).build();
 		}
 		Comment comment = new Comment();
+		//게시글 작성엔 내용만 들어가야함
 		comment.setContent(dto.getContent());
 		// 게시판 번호로 게시글 찾기
 		Optional<Board> optBoard = boardRepository.findById(boardId);
@@ -130,6 +126,7 @@ public class CommentService {
 		Comment comment = optComment.get();
 		// 사용자가 작성자 본인 혹은 ROLE_ADMIN인지 확인
 		if (comment.getMember().getUsername().equals(currentMember.getUsername()) || getRole.equals("ROLE_ADMIN")) {
+			//수정할 내용 입력
 			comment.setContent(dto.getContent());
 			answerRepository.save(comment);
 			return ResponseEntity.ok().build();

@@ -49,7 +49,7 @@ public class Member {
 	
 	//양방향 매핑
 	//EAGER로 설정해서 회원정보를 가져올 때 등록한 게시물도 같이 조회
-	@OneToMany(mappedBy = "member",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "member",fetch = FetchType.LAZY)
 	private List<Board> boardList = new ArrayList<Board>();
 	
 

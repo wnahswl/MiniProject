@@ -9,7 +9,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -37,14 +36,10 @@ public class SecurityConfig {
 	@Bean
 	  SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		http.authorizeHttpRequests(auth->auth
-				.requestMatchers(new AntPathRequestMatcher("/comment/create")).hasRole("USER")
-				.requestMatchers(new AntPathRequestMatcher("/comment/update")).hasRole("USER")
-				.requestMatchers(new AntPathRequestMatcher("/comment/delete")).hasAnyRole("USER","ADMIN")
-				.requestMatchers(new AntPathRequestMatcher("/board/create")).hasRole("USER")
-				.requestMatchers(new AntPathRequestMatcher("/board/update")).hasRole("USER")
-				.requestMatchers(new AntPathRequestMatcher("/board/delete")).hasAnyRole("USER","ADMIN")
-				.requestMatchers(new AntPathRequestMatcher("/member/update")).hasAnyRole("USER","ADMIN")
-				.requestMatchers(new AntPathRequestMatcher("/member/delete")).hasAnyRole("USER","ADMIN")
+//				.requestMatchers(new AntPathRequestMatcher("/comment/**")).hasAnyRole("USER","ADMIN")
+//				.requestMatchers(new AntPathRequestMatcher("/board/**")).hasAnyRole("USER","ADMIN")
+//				.requestMatchers(new AntPathRequestMatcher("/user/update")).hasAnyRole("USER","ADMIN")
+//				.requestMatchers(new AntPathRequestMatcher("/user/delete/**")).hasAnyRole("USER","ADMIN")
 				.anyRequest().permitAll());
 		
 		http.cors(cors->cors.configurationSource(corsConfigurationSource()));
@@ -56,7 +51,6 @@ public class SecurityConfig {
 		//스프링 시큐리티가 등록한 필터체인의 뒤에 작성한 필터를 추가한다.
 		http.addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()));
 		http.addFilterBefore(new JWTAuthorizationFilter(memberRepository), AuthorizationFilter.class);
-		
 		
 		return http.build();
 	}

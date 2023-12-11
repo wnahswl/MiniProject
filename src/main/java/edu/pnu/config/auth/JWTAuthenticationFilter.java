@@ -47,7 +47,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		return auth;
 	}
 
-		// 인증이 성공했을 때 실행되는 후처리 메소드
+	// 인증이 성공했을 때 실행되는 후처리 메소드
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {

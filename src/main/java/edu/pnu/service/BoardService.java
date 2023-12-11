@@ -46,6 +46,7 @@ public class BoardService {
 	public String GetRole() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
+		//사용자를 찾지 못할 경우
 		if(authentication == null || !authentication.isAuthenticated()) {
 			System.out.println("로그인을 해주세요");
 		}
@@ -78,7 +79,7 @@ public class BoardService {
 	}
     //특정 게시판 출력
 	public BoardDto getQuestion(Integer id) {
-		Optional<Board> findBoard = this.questionBoardRepository.findById(id);
+		Optional<Board> findBoard = questionBoardRepository.findById(id);
 		if (findBoard.isPresent()) {
 			Board board = findBoard.get();
 			BoardDto dto = new BoardDto(board.getId(),board.getTitle(),board.getContent(),
@@ -99,10 +100,10 @@ public class BoardService {
 			// 현재 사용자가 인증되지 않았을 경우
 			return ResponseEntity.status(401).build();
 		}
-
+		
 		Board board = new Board();
+		//게시판 작성에는 제목과 내용이 있어야함
 		board.setTitle(boardDto.getTitle());
-		System.out.println("dsadsasadsadsadad" + board.getTitle());
 		board.setContent(boardDto.getContent());
 		board.setCreateDate(new Date());
 		//조회수 초기값을 1로 수정
@@ -127,6 +128,7 @@ public class BoardService {
 		Board board = updatedBoard.get();
 		//수정가능한건 본인 혹은 ROLE_ADMIN만 가능
 		if(board.getMember().getUsername().equals(currentMember.getUsername())||getRole.equals("ROLE_ADMIN") ) {
+			//수정엔 제목과 내용이 있어야함
 		board.setTitle(boardDto.getTitle());
 		board.setContent(boardDto.getContent());
 		questionBoardRepository.save(board);
@@ -143,7 +145,6 @@ public class BoardService {
 		String getRole = GetRole();
 		if (optionalQuestion.isPresent()) {
 			Board question = optionalQuestion.get();
-
 			// 현재 사용자가 작성자 혹은 ROLE_ADMIN인지 확인
 			if (question.getMember().getUsername().equals(currentMember.getUsername())|| getRole.equals("ROLE_ADMIN")) {
 				questionBoardRepository.delete(question);
