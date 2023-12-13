@@ -11,7 +11,7 @@
 ### 간편하게 조회할 수 있는 주자창 정보 제공 서비스
 
 
-### 사용된 기술들
+## 사용된 기술들
 <div>
 <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> 
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
